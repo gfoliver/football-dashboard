@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background:#1b1f23;
+    color: #fff;
+
+    input, button, textarea {
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+    }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+
+        &:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+    }
+}
+
+.id-column {
+    width: 50px;
+}

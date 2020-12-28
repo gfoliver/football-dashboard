@@ -1,0 +1,37 @@
+.main-header {
+    padding: 30px 0;
+
+    .container {
+        display: flex;
+
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin-left: auto;
+
+            li {
+                & + li {
+                    margin-left: 30px;
+                }
+
+                a {
+                    color: #fff;
+                    text-decoration: none;
+                    display: block;
+
+                    &.active {
+                        color: $primary;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+}
