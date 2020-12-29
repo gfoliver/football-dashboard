@@ -19,13 +19,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::prefix('/teams')->group(function() {
-    Route::post('/', [TeamController::class, 'save'])->name('api.teams.save');
-
-    Route::delete('/{id}', [TeamController::class, 'delete'])->name('api.teams.delete');
-});
-
-Route::prefix('/leagues')->group(function() {
-    Route::delete('/{id}',[LeagueController::class, 'delete'])->name('api.leagues.delete');
-});

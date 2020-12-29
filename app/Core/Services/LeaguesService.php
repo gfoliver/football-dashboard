@@ -6,6 +6,7 @@ use App\Core\Entities\League;
 use App\Core\Repositories\Contracts\ILeaguesRepository;
 use App\Core\Services\Contracts\ILeaguesService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class LeaguesService implements ILeaguesService {
     private ILeaguesRepository $repository;
@@ -17,6 +18,10 @@ class LeaguesService implements ILeaguesService {
     
     public function save(array $data): ?League
     {
+        $slug = Str::slug($data['name'], '-');
+
+        $data['slug'] = $slug;
+
         return $this->repository->save($data);
     }
 
@@ -33,5 +38,10 @@ class LeaguesService implements ILeaguesService {
     public function list(): Collection
     {
         return $this->repository->list();
+    }
+
+    public function bySlug(string $slug): ?League
+    {
+        return $this->repository->bySlug($slug);
     }
 }

@@ -16,10 +16,12 @@ class DatabaseSeeder extends Seeder
         \App\Core\Entities\Team::create(['name' => 'Manchester United']);
         \App\Core\Entities\Team::create(['name' => 'Chelsea']);
 
-        \App\Core\Entities\League::create(['name' => 'Premier League']);
+        \App\Core\Entities\League::create(['name' => 'Premier League', 'slug' => 'premier-league']);
 
         \App\Core\Entities\Season::create([
-            'name'          => '20/21', 
+            'name'          => 'Premier League - 20/21', 
+            'starts_in'     => 2020, 
+            'ends_in'       => 2021, 
             'league_id'     => 1,
             'active'        => true
         ]);

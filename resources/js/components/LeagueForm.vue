@@ -1,15 +1,15 @@
 <template>
     <form @submit.prevent="handleSubmit" class="col-md-8 bg-dark text-white py-3 rounded">
         <h3 class="text-center mb-3">
-            <span v-if="team">Edit {{team.name}}</span>
-            <span v-else>Add Team</span>
+            <span v-if="league">Edit {{league.name}}</span>
+            <span v-else>Add League</span>
         </h3>
         <div class="form-group">
-            <label for="team-name" class="form-label" required>Name</label>
+            <label for="league-name" class="form-label" required>Name</label>
             <input 
                 name="name" 
                 type="text" 
-                id="team-name" 
+                id="league-name" 
                 class="form-control bg-dark text-white" 
                 v-model="name"
                 required
@@ -22,10 +22,10 @@
     import toasts from '../mixins/toasts';
 
     export default {
-        name: "TeamForm",
+        name: "LeagueForm",
         mixins: [toasts],
         props: {
-            team: {
+            league: {
                 type: Object | null,
                 required: true
             },
@@ -45,8 +45,8 @@
             }
         },
         created() {
-            if (this.team)
-                this.name = this.team.name;
+            if (this.league)
+                this.name = this.league.name;
         },
         methods: {
             handleSubmit() {
@@ -56,11 +56,11 @@
                     name: this.name,
                     id: this.id 
                 }).then(res => {
-                    this.addToastSuccess('Team saved successfully.');
+                    this.addToastSuccess('League saved successfully.');
 
                     this.name = '';
                 }).catch(err => {
-                    this.addToastError(err, 'Error saving team.');
+                    this.addToastError(err, 'Error saving league.');
                 }).finally(() => {
                     this.isLoading = false;
                 });

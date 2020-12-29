@@ -1,16 +1,19 @@
 @extends('index')
 
-@section('title', $league->name)
+@section('title', $season->name)
 
 @section('content')
 <main>
     <div class="container pt-5">
         <div class="row">
             <div class="col-md-10">
-                <h2 class="mb-4">{{ $league->name }}</h2>
+                <h2 class="mb-4">{{ $season->name }}</h2>
             </div>
             <div class="col">
-                <a href="{{ route('site.leagues.form', $league->id) }}" class="btn btn-primary w-100 mb-5">
+                <a 
+                    href="{{ route('site.leagues.seasons.form', ['slug' => $league->slug, 'id' => $season->id]) }}" 
+                    class="btn btn-primary w-100 mb-5"
+                >
                     <i class="fas fa-edit"></i> Edit
                 </a>
             </div>
@@ -18,10 +21,10 @@
         @if($standings)
             <div class="row align-items-center">
                 <div class="col-md-10">
-                    <h4>{{ $season->name }} Season Table</h4>
+                    <h4>Table</h4>
                 </div>
                 <div class="col">
-                    <a href="{{ route('site.leagues.seasons', $league->slug) }}" class="d-block float-right">
+                    <a href="#" class="d-block float-right">
                         <small>View other seasons</small>
                     </a>
                 </div>
@@ -58,9 +61,6 @@
                     @endforeach
                 </tbody>
             </table>
-        @else
-            <h6>No seasons found</h6>
-            <a href="#" class="btn btn-primary">Add Season</a>
         @endif
     </div>
 </main>

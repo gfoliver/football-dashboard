@@ -11,6 +11,8 @@ class Season extends Model
 
     protected $fillable = [
         'name',
+        'starts_in',
+        'ends_in',
         'active',
         'league_id'
     ];

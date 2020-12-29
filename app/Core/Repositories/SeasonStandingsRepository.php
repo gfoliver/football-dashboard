@@ -23,6 +23,11 @@ class SeasonStandingsRepository implements ISeasonStandingsRepository {
         return $seasonStanding;
     }
 
+    public function saveMany(array $data): Bool
+    {
+        return SeasonStanding::insert($data);
+    }
+
     public function byId(int $id): ?SeasonStanding
     {
         return SeasonStanding::find($id);

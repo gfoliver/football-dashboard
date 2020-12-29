@@ -10,7 +10,7 @@ class SeasonStanding extends Model
     use HasFactory;
 
     protected $fillable = [
-        'league_id',
+        'season_id',
         'team_id',
         'points',
         'matches',

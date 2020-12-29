@@ -17,6 +17,8 @@ class CreateSeasonsTable extends Migration
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('starts_in');
+            $table->integer('ends_in');
             $table->boolean('active');
             $table->unsignedBigInteger('league_id');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

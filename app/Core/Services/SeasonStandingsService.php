@@ -34,4 +34,24 @@ class SeasonStandingsService implements ISeasonStandingsService {
     {
         return $this->repository->bySeason($seasonId);
     }
+
+    public function saveMany(int $seasonId, array $teamIds): Bool
+    {
+        $data = array_map(function($teamId) use ($seasonId) {
+            return [
+                'team_id'           => $teamId,
+                'season_id'         => $seasonId,
+                'points'            => 0,
+                'matches'           => 0,
+                'wins'              => 0,
+                'draws'             => 0,
+                'losses'            => 0,
+                'goal_difference'   => 0,
+                'goals_scored'      => 0,
+                'goals_conceded'    => 0,
+            ];
+        }, $teamIds);
+
+        return $this->repository->saveMany($data);
+    }
 }

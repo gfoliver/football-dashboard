@@ -4,15 +4,19 @@
         table-variant="dark" 
         bordered 
         table-class="mt-3"
-        :items="mtbLeagues"
+        :items="mtbSeasons"
         :fields="fields"
-        v-if="mtbLeagues.length"
+        v-if="mtbSeasons.length"
     >
         <template #cell(name)="data">
-            <a :href="`${innerRoute}/${data.item.slug}`">{{ data.item.name }}</a>
+            <a href="#">{{ data.item.name }}</a>
+        </template>
+        <template #cell(active)="data">
+            <i class="fas fa-check text-success" v-if="data.item.active"></i>
+            <i class="fas fa-times text-danger" v-else></i>
         </template>
         <template #cell(actions)="data">
-            <a :href="`${innerRoute}/${data.item.slug}`" class="btn btn-primary">
+            <a :href="`${innerRoute}/${data.item.id}`" class="btn btn-primary">
                 <i class="fas fa-eye"></i>
             </a>
             <a :href="`${formRoute}/${data.item.id}`" class="btn btn-primary">
@@ -23,14 +27,14 @@
             </button>
         </template>
     </b-table>
-    <h6 v-else>No leagues found.</h6>
+    <h6 v-else>No seasons found.</h6>
 </template>
 <script>
     import toasts from '../mixins/toasts';
     import confirm from '../mixins/confirm';
 
     export default {
-        name: "LeaguesTable",
+        name: "SeasonsTable",
         mixins: [toasts, confirm],
         props: {
             formRoute: {
@@ -41,14 +45,18 @@
                 type: String,
                 required: true
             },
-            leagues: {
+            seasons: {
                 type: Array,
+                required: true
+            },
+            deleteUrl: {
+                type: String,
                 required: true
             }
         },
         data() {
             return {
-                mtbLeagues: [],
+                mtbSeasons: [],
                 fields: [
                     {
                         key: 'id',
@@ -63,19 +71,22 @@
                         class: 'align-row-center'
                     },
                     {
+                        key: 'active',
+                        label: 'Active',
+                        class: 'align-row-center'
+                    },
+                    {
                         key: 'actions',
                         label: 'Actions',
-                        class: 'leagues-actions-column'
+                        class: 'season-actions-column'
                     }
                 ]
             }
         },
         methods: {
             handleDelete(id) {
-                const name = this.mtbLeagues.find(i => i.id == id).name;
-
                 this.confirm({
-                    title: `Are you sure you want to delete '${name}'?`,
+                    title: `Are you sure you want to delete this season?`,
                     okTitle: 'Delete',
                     okVariant: 'danger'
                 }).then(value => {
@@ -91,30 +102,33 @@
                     this.mtbLeagues.splice(index, 1);
             },
             deleteTeam(id) {
+                console.log(id);
+                return;
+
                 this.$http
-                    .delete('/leagues/' + id)
+                    .delete(this.deleteUrl + id)
                     .then(response => {
                         if (response.data.status) {
-                            this.addToastSuccess('League deleted successfully.');
+                            this.addToastSuccess('Season deleted successfully.');
 
                             this.removeLeagueFromTable(id);
                         }
                         else {
-                            this.addToastError(null, 'Error deleting league.');
+                            this.addToastError(null, 'Error deleting season.');
                         }
                     }).catch(error => {
-                        this.addToastError(error, 'Error deleting league.');
+                        this.addToastError(error, 'Error deleting season.');
                     });
             }
         },
         created() {
-            this.mtbLeagues = this.leagues;
+            this.mtbSeasons = this.seasons;
         }
     }
 </script>
 
 <style>
-    .leagues-actions-column {
+    .season-actions-column {
         width: 162px;
     }
 </style>

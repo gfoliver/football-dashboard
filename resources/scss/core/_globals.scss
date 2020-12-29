@@ -33,3 +33,11 @@ body {
 .id-column {
     width: 50px;
 }
+
+.align-row-center {
+    vertical-align: middle !important;
+}
+
+.form-control .vs__dropdown-toggle {
+    border: none !important;
+}

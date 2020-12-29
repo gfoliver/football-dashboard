@@ -1,5 +1,9 @@
 import axios from 'axios';
 
-export default axios.create({
-    baseURL: process.env.MIX_API_URL
+// global appVar
+
+const api = axios.create({
+    baseURL: appVar.baseURL
 });
+
+export default api;

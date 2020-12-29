@@ -37,4 +37,9 @@ class LeaguesRepository implements ILeaguesRepository {
     {
         return League::all();
     }
+
+    public function bySlug(string $slug): ?League
+    {
+        return League::where('slug', $slug)->first();
+    }
 }

@@ -13,4 +13,6 @@ interface ILeaguesRepository {
     public function delete(int $id): Bool;
 
     public function byId(int $id): ?League;
+
+    public function bySlug(string $slug): ?League;
 }

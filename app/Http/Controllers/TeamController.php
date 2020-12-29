@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\Services\Contracts\ITeamsService;
+use App\Http\Requests\SaveTeam;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -28,12 +29,15 @@ class TeamController extends Controller
 
         if ($id) {
             $team = $this->service->byId($id);
+
+            if (!isset($team))
+                abort(404);
         }
 
         return view('pages.teams.form', compact(['id', 'team']));
     }
 
-    public function save(Request $request)
+    public function save(SaveTeam $request)
     {
         try {
             $team = $this->service->save($request->all());

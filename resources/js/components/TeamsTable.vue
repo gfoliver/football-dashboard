@@ -21,8 +21,12 @@
 </template>
 
 <script>
+    import toasts from '../mixins/toasts';
+    import confirm from '../mixins/confirm';
+
     export default {
         name: "TeamsTable",
+        mixins: [toasts, confirm],
         props: {
             teams: {
                 type: Array,
@@ -41,12 +45,13 @@
                         key: 'id',
                         sortable: true,
                         label: '#',
-                        class: "id-column"
+                        class: "id-column align-row-center"
                     },
                     {
                         key: 'name',
                         sortable: true,
-                        label: 'Name'
+                        label: 'Name',
+                        class: 'align-row-center'
                     },
                     {
                         key: 'actions',
@@ -58,19 +63,17 @@
         },
         methods: {
             handleDelete(id) {
-                this.$bvModal.msgBoxConfirm(`Are you sure you want to delete team #${id}?`, {
-                    headerBgVariant: 'dark',
-                    footerBgVariant: 'dark',
-                    bodyBgVariant: 'dark',
+                const name = this.mtbTeams.find(i => i.id == id).name;
+
+                this.confirm({
+                    title: `Are you sure you want to delete '${name}'?`,
                     okVariant: 'danger',
                     okTitle: 'Delete'
-                })
-                    .then(value => {
-                        if (value) {
-                            this.deleteTeam(id);
-                        }
-                    })
-                    .catch();
+                }).then(value => {
+                    if (value) {
+                        this.deleteTeam(id);
+                    }
+                }).catch();
             },
             removeTeamFromTable(id) {
                 const index = this.mtbTeams.findIndex(i => i.id == id);
@@ -83,27 +86,15 @@
                     .delete('/teams/' + id)
                     .then(response => {
                         if (response.data.status) {
-                            this.$bvToast.toast('Team deleted successfully.', {
-                                title: 'Success!',
-                                variant: 'success',
-                                solid: true
-                            });
+                            this.addToastSuccess('Team deleted successfully.');
 
                             this.removeTeamFromTable(id);
                         }
                         else {
-                            this.$bvToast.toast('Error deleting team.', {
-                                title: 'Error!',
-                                variant: 'danger',
-                                solid: true
-                            });
+                            this.addToastError(null, 'Error deleting team.');
                         }
                     }).catch(error => {
-                        this.$bvToast.toast('Error deleting team.', {
-                            title: 'Error!',
-                            variant: 'danger',
-                            solid: true
-                        });
+                        this.addToastError(error, 'Error deleting team.');
                     });
             }
         },

@@ -1,5 +1,7 @@
 @extends('index')
 
+@section('title', 'Teams')
+
 @section('content')
 <main>
     <div class="container pt-5">
