@@ -13,7 +13,7 @@ class Team extends Model
         'name'
     ];
 
-    public function seasonStanding()
+    public function seasonStandings()
     {
         return $this->hasMany('App\Core\Entities\SeasonStanding');
     }

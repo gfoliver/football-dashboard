@@ -53,7 +53,7 @@ class SeasonController extends Controller
         if ($season->league_id != $league->id)
             abort(404);
 
-        $standings = $this->standingsService->bySeason($season->id);
+        $standings = $season->seasonStandings;
 
         return view('pages.leagues.seasons-inner', compact(['season', 'league', 'standings']));
     }

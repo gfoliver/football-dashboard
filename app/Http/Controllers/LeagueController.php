@@ -44,7 +44,7 @@ class LeagueController extends Controller
         $season = $this->seasonsService->currentSeasonByLeague($league->id);
 
         if (isset($season))
-            $standings = $this->standingsService->bySeason($season->id);
+            $standings = $season->seasonStandings;
 
         return view('pages.leagues.inner', compact(['league', 'season','standings']));
     }

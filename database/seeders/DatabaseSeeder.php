@@ -51,5 +51,25 @@ class DatabaseSeeder extends Seeder
             'goals_conceded'    => 8,
             'goal_difference'   => -5,
         ]);
+
+        \App\Core\Entities\Match::create([
+            'season_id'         => 1,
+            'home_team_id'      => 1,
+            'away_team_id'      => 2,
+            'winner_id'         => 1,
+            'home_team_goals'   => 5,
+            'away_team_goals'   => 0,
+            'result'            => '5x0'
+        ]);
+
+        \App\Core\Entities\Match::create([
+            'season_id'         => 1,
+            'home_team_id'      => 2,
+            'away_team_id'      => 1,
+            'winner_id'         => null,
+            'home_team_goals'   => 3,
+            'away_team_goals'   => 3,
+            'result'            => '3x3'
+        ]);
     }
 }
