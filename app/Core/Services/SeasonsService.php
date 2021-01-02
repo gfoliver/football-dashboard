@@ -8,6 +8,7 @@ use App\Core\Services\Contracts\ILeaguesService;
 use App\Core\Services\Contracts\ISeasonsService;
 use App\Core\Services\Contracts\ISeasonStandingsService;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 class SeasonsService implements ISeasonsService {
     private ISeasonsRepository $repository;
@@ -59,5 +60,10 @@ class SeasonsService implements ISeasonsService {
     public function currentSeasonByLeague(int $leagueId): ?Season
     {
         return $this->repository->currentSeasonByLeague($leagueId);
+    }
+
+    public function teams(int $id): ?SupportCollection
+    {
+        return $this->repository->teams($id);
     }
 }

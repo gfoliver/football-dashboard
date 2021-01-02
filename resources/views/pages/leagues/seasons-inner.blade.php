@@ -6,8 +6,13 @@
 <main>
     <div class="container pt-5">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <h2 class="mb-4">{{ $season->name }}</h2>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ route('site.leagues.seasons.match.form', ['slug' => $league->slug, 'id' => $season->id]) }}" class="btn btn-success w-100">
+                    <i class="fas fa-futbol"></i> Save Match
+                </a>
             </div>
             <div class="col">
                 <a 
@@ -24,7 +29,7 @@
                     <h4>Table</h4>
                 </div>
                 <div class="col">
-                    <a href="#" class="d-block float-right">
+                    <a href="{{ route('site.leagues.seasons', $league->slug) }}" class="d-block float-right">
                         <small>View other seasons</small>
                     </a>
                 </div>
@@ -48,7 +53,14 @@
                     @foreach($standings as $index => $team)
                         <tr>
                             <td class="align-middle">{{ $index + 1 }}</td>
-                            <td class="align-middle">{{ $team->team->name }}</td>
+                            <td class="align-middle">
+                                <div class="d-flex align-items-center">
+                                    @if($team->team->logo)
+                                        <img src="{{ $team->team->logo }}" style="width: 30px; height: 30px; object-fit: contain; margin-right: 20px">
+                                    @endif
+                                    <div class="name" style="font-size: 20px">{{ $team->team->name }}</div>
+                                </div>
+                            </td>
                             <td class="align-middle">{{ $team->points }}</td>
                             <td class="align-middle">{{ $team->matches }}</td>
                             <td class="align-middle">{{ $team->wins }}</td>

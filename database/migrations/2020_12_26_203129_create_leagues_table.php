@@ -18,6 +18,8 @@ class CreateLeaguesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('logo')->nullable();
+            $table->string('cover')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });

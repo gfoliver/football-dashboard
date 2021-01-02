@@ -15,6 +15,20 @@
                 required
             >
         </div>
+        <div class="form-group">
+            <label for="league-logo" class="form-label" required>Logo</label>
+            <b-form-file
+                id="league-logo"
+                v-model="logo"
+            ></b-form-file>
+        </div>
+        <div class="form-group">
+            <label for="league-cover" class="form-label" required>Cover Image</label>
+            <b-form-file
+                id="league-cover"
+                v-model="cover"
+            ></b-form-file>
+        </div>
         <button class="btn btn-primary" type="submit" :disabled="isLoading">Save</button>
     </form>
 </template>
@@ -41,6 +55,8 @@
         data() {
             return {
                 name: '',
+                logo: null,
+                cover: null,
                 isLoading: false,
             }
         },
@@ -52,13 +68,27 @@
             handleSubmit() {
                 this.isLoading = true;
 
-                this.$http.post(this.saveUrl, { 
-                    name: this.name,
-                    id: this.id 
-                }).then(res => {
+                const data = new FormData();
+
+                data.append('name', this.name);
+
+                if (this.id)
+                    data.append('id', this.id);
+
+                if (this.logo)
+                    data.append('logo', this.logo);
+                
+                if (this.cover)
+                    data.append('cover', this.cover);
+
+                this.$http.post(this.saveUrl, data).then(res => {
                     this.addToastSuccess('League saved successfully.');
 
-                    this.name = '';
+                    if (!this.id) {
+                        this.name = '';
+                        this.logo = null;
+                        this.cover = null;
+                    }
                 }).catch(err => {
                     this.addToastError(err, 'Error saving league.');
                 }).finally(() => {

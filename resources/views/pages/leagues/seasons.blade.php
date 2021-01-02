@@ -5,6 +5,10 @@
 @section('content')
 <main>
     <div class="container pt-5">
+        <a href="{{ route('site.leagues.inner', $league->slug) }}" class="text-secondary mb-3 d-block">
+            <i class="fas fa-chevron-left"></i>
+            Back
+        </a>
         <div class="row">
             <div class="col-md-10">
                 <h2 class="mb-4">{{ $league->name }} seasons</h2>

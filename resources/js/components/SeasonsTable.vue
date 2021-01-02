@@ -9,7 +9,7 @@
         v-if="mtbSeasons.length"
     >
         <template #cell(name)="data">
-            <a href="#">{{ data.item.name }}</a>
+            <a :href="`${innerRoute}/${data.item.id}`">{{ data.item.name }}</a>
         </template>
         <template #cell(active)="data">
             <i class="fas fa-check text-success" v-if="data.item.active"></i>

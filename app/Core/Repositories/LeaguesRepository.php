@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\League;
 use App\Core\Repositories\Contracts\ILeaguesRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class LeaguesRepository implements ILeaguesRepository {
@@ -36,6 +37,11 @@ class LeaguesRepository implements ILeaguesRepository {
     public function list(): Collection
     {
         return League::all();
+    }
+
+    public function paginate(int $per_page): LengthAwarePaginator
+    {
+        return League::paginate($per_page);
     }
 
     public function bySlug(string $slug): ?League

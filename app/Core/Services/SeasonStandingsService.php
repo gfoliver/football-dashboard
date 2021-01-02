@@ -2,9 +2,12 @@
 
 namespace App\Core\Services;
 
+use App\Core\Constants\Side;
+use App\Core\Entities\Match;
 use App\Core\Entities\SeasonStanding;
 use App\Core\Repositories\Contracts\ISeasonStandingsRepository;
 use App\Core\Services\Contracts\ISeasonStandingsService;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class SeasonStandingsService implements ISeasonStandingsService {
@@ -53,5 +56,51 @@ class SeasonStandingsService implements ISeasonStandingsService {
         }, $teamIds);
 
         return $this->repository->saveMany($data);
+    }
+
+    public function updateWithMatch(int $id, Match $match, string $side): ?SeasonStanding
+    {
+        if ($standing = $this->repository->byId($id)) {
+            if (! ($side == Side::Home || $side == Side::Away)) {
+                throw new Exception('Parameter $side must be an instance of App\Core\Constants\Side');
+            }
+
+            $otherSide = Side::otherSide($side);
+
+            $goalsScored = $standing->goals_scored + $match->{$side . '_team_goals'};
+            $goalsConceded = $standing->goals_conceded + $match->{$otherSide . '_team_goals'};
+            $won = (! is_null($match->winner_id)) && $match->winner_id == $standing->team_id;
+            $draw = is_null($match->winner_id);
+            $lost = (! is_null($match->winner_id)) && $match->winner_id != $standing->team_id;
+
+            $standing->fill([
+                'matches'           => $standing->matches + 1,
+                'points'            => $standing->points + $this->calcPointsByResult($standing->team_id, $match),
+                'goals_scored'      => $goalsScored,
+                'goals_conceded'    => $goalsConceded,
+                'goal_difference'   => $goalsScored - $goalsConceded,
+                'wins'              => $standing->wins + (int)$won,
+                'draws'             => $standing->draws + (int)$draw,
+                'losses'            => $standing->losses + (int)$lost
+            ]);
+
+            $saved = $this->repository->save($standing->toArray());
+
+            return $saved;
+        }
+
+        return null;
+    }
+
+    protected function calcPointsByResult(int $teamId, Match $match): int
+    {
+        if ($match->winner_id) {
+            if ($match->winner_id == $teamId)
+                return 3;
+            else
+                return 0;
+        }
+
+        return 1;
     }
 }

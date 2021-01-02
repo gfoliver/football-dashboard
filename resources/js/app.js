@@ -12,6 +12,9 @@ import LeaguesTable from './components/LeaguesTable.vue';
 import LeagueForm from './components/LeagueForm.vue';
 import SeasonsTable from './components/SeasonsTable.vue';
 import SeasonForm from './components/SeasonForm.vue';
+import RegisterForm from './components/RegisterForm.vue';
+import LoginForm from './components/LoginForm.vue';
+import MatchForm from './components/MatchForm.vue';
 
 Vue.use(BootstrapVue);
 
@@ -25,6 +28,9 @@ const app = new Vue({
         LeaguesTable,
         LeagueForm,
         SeasonsTable,
-        SeasonForm
+        SeasonForm,
+        RegisterForm,
+        LoginForm,
+        MatchForm
     }
 });

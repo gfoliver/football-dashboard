@@ -40,6 +40,12 @@ class SeasonStandingsRepository implements ISeasonStandingsRepository {
 
     public function bySeason(int $seasonId): Collection
     {
-        return SeasonStanding::where('season_id', $seasonId)->orderBy('points', 'DESC')->get();
+        return SeasonStanding::where('season_id', $seasonId)
+                ->orderBy('points', 'DESC')
+                ->orderBy('goal_difference', 'DESC')
+                ->orderBy('goals_scored', 'DESC')
+                ->orderBy('wins', 'DESC')
+                ->orderBy('goals_conceded', 'ASC')
+                ->get();
     }
 }

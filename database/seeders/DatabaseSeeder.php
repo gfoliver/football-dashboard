@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'season_id'         => 1,
             'team_id'           => 1,
             'points'            => 7,
-            'matches'           => 3,
+            'matches'           => 2,
             'wins'              => 2,
             'draws'             => 1,
             'losses'            => 0,
@@ -43,7 +44,7 @@ class DatabaseSeeder extends Seeder
             'season_id'         => 1,
             'team_id'           => 2,
             'points'            => 1,
-            'matches'           => 3,
+            'matches'           => 2,
             'wins'              => 0,
             'draws'             => 1,
             'losses'            => 2,
@@ -70,6 +71,12 @@ class DatabaseSeeder extends Seeder
             'home_team_goals'   => 3,
             'away_team_goals'   => 3,
             'result'            => '3x3'
+        ]);
+
+        \App\Core\Entities\User::create([
+            'name'      => 'admin',
+            'email'     => 'admin@dashboard.com',
+            'password'  => Hash::make('12345678')
         ]);
     }
 }

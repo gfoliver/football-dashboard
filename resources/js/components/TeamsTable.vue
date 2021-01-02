@@ -8,6 +8,13 @@
         :fields="fields"
         v-if="mtbTeams.length"
     >
+        
+        <template #cell(name)="data">
+            <div class="d-flex align-items-center">
+                <img :src="data.item.logo" v-if="data.item.logo" style="width: 30px; height: 30px; object-fit: contain; margin-right: 20px">
+                <div class="name" style="font-size: 20px">{{ data.item.name }}</div>
+            </div>
+        </template>
         <template #cell(actions)="data">
             <a :href="`${formRoute}/${data.item.id}`" class="btn btn-primary">
                 <i class="fas fa-edit"></i>

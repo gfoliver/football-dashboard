@@ -5,6 +5,13 @@
             <span v-else>Add Team</span>
         </h3>
         <div class="form-group">
+            <label for="team-logo">Logo</label>
+            <b-form-file
+                id="team-logo"
+                v-model="logo"
+            ></b-form-file>
+        </div>
+        <div class="form-group">
             <label for="team-name" class="form-label" required>Name</label>
             <input 
                 name="name" 
@@ -41,6 +48,7 @@
         data() {
             return {
                 name: '',
+                logo: null,
                 isLoading: false,
             }
         },
@@ -52,10 +60,16 @@
             handleSubmit() {
                 this.isLoading = true;
 
-                this.$http.post(this.saveUrl, { 
-                    name: this.name,
-                    id: this.id 
-                }).then(res => {
+                let data = new FormData();
+                data.append('name', this.name);
+                
+                if (this.id)
+                    data.append('id', this.id);
+                
+                if (this.logo)
+                    data.append('logo', this.logo);
+
+                this.$http.post(this.saveUrl, data).then(res => {
                     this.addToastSuccess('Team saved successfully.');
 
                     this.name = '';
